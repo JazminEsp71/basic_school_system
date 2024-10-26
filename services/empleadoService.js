@@ -10,4 +10,9 @@ export default class empleadoService{
     getAll(){
         return this.empleados;
     }
+
+    //Obtener por id
+    getById(id){
+        return this.empleados.find(item => item.numeroEmpleado == id);
+    }
 }

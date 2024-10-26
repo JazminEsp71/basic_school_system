@@ -10,3 +10,5 @@ const departamentos = [
     { numeroDepartamento: 9, nombre: "Calidad", idEncargado: 9, idArea: 9 },
     { numeroDepartamento: 10, nombre: "Compras", idEncargado: 10, idArea: 10 }
   ];
+
+  export default departamentos;
