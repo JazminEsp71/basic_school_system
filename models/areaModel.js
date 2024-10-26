@@ -10,3 +10,5 @@ const areas = [
     { idArea: 9, nombre: "Calidad", edificio: "Edificio I" },
     { idArea: 10, nombre: "Compras", edificio: "Edificio J" }
   ];
+
+export default areas;
