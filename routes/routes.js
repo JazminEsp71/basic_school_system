@@ -1,16 +1,16 @@
 //Importa rutas
-import { Router } from "express";
-import empleadoRoutes from "./empleadoRoutes.js";
-import departamentoRoutes from "./departamentoRoutes.js";
-import encargadoRoutes from "./encargadoRoutes.js";
-import areaRoutes from "./areaRoutes.js";
+import empleadoRouter from "./empleadoRouter.js";
+import departamentoRoutes from "./departamentoRouter.js";
+import encargadoRoutes from "./encargadoRouter.js";
+import areaRoutes from "./areaRouter.js";
 
-const router = Router();
+//funcion rutas de la API
+function routerApi(app) {
+  // Definir las rutas para cada entidad
+  app.use("/empleados", empleadoRouter);
+  app.use("/departamentos", departamentoRoutes);
+  app.use("/encargados", encargadoRoutes);
+  app.use("/areas", areaRoutes);
+}
 
-// Definir las rutas para cada entidad
-router.use("/empleados", empleadoRoutes);
-router.use("/departamentos", departamentoRoutes);
-router.use("/encargados", encargadoRoutes);
-router.use("/areas", areaRoutes);
-
-export default router;
+export default routerApi;

@@ -1,4 +1,5 @@
- import express, { Router } from "express";
+import express, { Router } from "express";
+import routerApi from "./routes/routes.js";
  
  const app = express();
  const port = 3000;
@@ -12,6 +13,7 @@
  });
 
  //Aplicar las rutas de la API
+ routerApi(app);
  
  //Puerto
  app.listen(port, () =>{

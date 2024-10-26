@@ -1,7 +1,14 @@
-import { Router } from "express";
-const router = Router();
+import express from 'express';
+import empleadoService from '../services/empleadoService.js';
 
-// Definir las rutas de área aquí
-router.get("/", (req, res) => res.send("Lista de empleados"));
-
+const router = express.Router();
+const service = new empleadoService();  //Instancia del servicio
+ 
+// Obtener todos los empleados
+router.get("/", (req, res) => {
+    const empleados = service.getAll();
+    res.json(empleados);
+  }); 
+  
+// Exportar el router como predeterminado
 export default router;

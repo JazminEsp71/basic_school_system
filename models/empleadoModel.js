@@ -10,6 +10,6 @@ const empleados = [
     { numeroEmpleado: 1009, nombre: "Alberto", apellido: "Cruz", edad: 33, genero: "Masculino", departamentoId: 9 },
     { numeroEmpleado: 1010, nombre: "Rosa", apellido: "Hernández", edad: 29, genero: "Femenino", departamentoId: 10 }
   ];
-  
-  module.exports = empleados;
+
+  export default empleados;
   
