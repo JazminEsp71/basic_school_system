@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { json } from 'express';
 import departamentoService from "../services/departamentoService.js";
 
 const router = express.Router();
@@ -18,11 +18,55 @@ router.get("/:numeroDepartamento", (req, res) =>{
     res.json(departamento);
 });
 
-//ruta para crear un nuevo departamento
+//Crear un nuevo departamento
 router.post("/", (req, res) =>{
-    const body = req.body;
-    const newDepartamento = service.created(body);
-    res.status(201).json(newDepartamento)
+    //Llama metodo 'created', pasando los datos del cuerpo de la solicitud
+    const result = service.created(req.body);
+
+    if(!result.success){
+        //Si las validaciones en service fallaron, devuelve un mensaje de error
+        return res.status(400).json({message: result.message});
+    }
+
+    //Si todo salio bien, devuelve el departamento creado
+    res.status(201).json({
+        message: result.message,
+        departamento: result.departamento
+    });
+});
+
+
+//Actualizar un departamento
+router.patch("/", (req, res) =>{
+    //Llama metodo 'update', pasando los datos del cuerpo de la solicitud
+    const result = service.update(req.body);
+
+    if(!result.success){
+        //Si las validaciones en service fallaron, devuelve un mensaje de error
+        return res.status(400).json({message: result.message});
+    }
+
+    //Si todo salio bien, devuelve el departamento actualizado
+    res.status(202).json({
+        message: result.message,
+        departamento: result.departamento
+    });
+});
+
+//Eliminar un departamento
+router.delete("/:id", (req, res) =>{
+    //Llama metodo 'delete', pasando por id del departamento
+    const {id} = req.params;
+    const respuesta = service.delete(id);
+
+    if(!respuesta.success){
+        //Si las validaciones en servicio fallaron, devuelve un mensaje de error
+        return res.status(400),json({message: respuesta.message});
+    }
+    res.status(202).json({
+        message: respuesta.message,
+        id
+    })
 });
 
 //Exportar el router como predeterminado

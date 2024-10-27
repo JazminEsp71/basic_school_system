@@ -10,3 +10,5 @@ const encargados = [
     { idEncargado: 9, nombre: "Alberto Cruz", estudio: "Lic. Comercio", turno: "Matutino" },
     { idEncargado: 10, nombre: "Rosa Hernández", estudio: "Administración de Empresas", turno: "Vespertino" }
   ];
+
+  export default encargados;
