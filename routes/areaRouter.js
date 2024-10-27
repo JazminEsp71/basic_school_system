@@ -1,5 +1,3 @@
-export default router;
-
 import express from 'express';
 import areaService from '../services/areaService.js';
 

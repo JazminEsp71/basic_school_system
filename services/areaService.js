@@ -1,4 +1,4 @@
-import empleados from "../models/areaModel.js";
+import areas from "../models/areaModel.js";
 
 export default class areaService{
     constructor(){
