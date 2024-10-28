@@ -23,7 +23,7 @@ class AreaService {
     return this.areas.find(area => area.idArea === id);
   }
 
-  update(id, changes)//parametros necesarios {
+  update(id, changes){//parametros necesarios {
     const index = this.areas.findIndex(area => area.idArea === id);
     if (index === -1) {
       throw new Error("Area not found");

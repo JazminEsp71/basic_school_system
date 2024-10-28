@@ -53,7 +53,7 @@ export default class departamentoService {
 
     //Si las validaciones son exitosas, procede la creacion del departamento
     const newDepartamento = {
-      numeroDepartamento: faker.string.uuid(),
+      numeroDepartamento: faker.number.int({ min: 10, max: 99 }),
       ...data,
     };
     this.departamentos.push(newDepartamento);
