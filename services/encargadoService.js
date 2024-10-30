@@ -13,7 +13,7 @@ class EncargadoService {
       ...data,
     };
     this.encargados.push(newEncargado);
-    return newEncargado;
+    return { message: "Encargado creado", encargado: newEncargado };
   }
 
   // Obtener todos los encargados
@@ -28,28 +28,25 @@ class EncargadoService {
 
   // Modificar un encargado
   update(id, changes) {
-    const index = this.encargados.findIndex(
-      (encargado) => encargado.idEncargado === id
-    );
+    const index = this.encargados.findIndex((encargado) => encargado.idEncargado === id);
     if (index === -1) {
       throw new Error("Attendant not found");
     }
     const encargado = this.encargados[index];
     this.encargados[index] = { ...encargado, ...changes };
-    return this.encargados[index];
+    return { message: "Encargado actualizado", encargado: this.encargados[index] };
   }
 
   // Eliminar un encargado
   delete(id) {
-    const index = this.encargados.findIndex(
-      (encargado) => encargado.idEncargado === id
-    );
+    const index = this.encargados.findIndex((encargado) => encargado.idEncargado === id);
     if (index === -1) {
       throw new Error("Attendant not found");
     }
     this.encargados.splice(index, 1);
-    return { id };
+    return { message: "Encargado eliminado" };
   }
 }
 
 export default EncargadoService;
+
