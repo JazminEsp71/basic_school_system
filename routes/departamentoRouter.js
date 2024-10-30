@@ -1,8 +1,8 @@
-import express, { json } from 'express';
-import departamentoService from "../services/departamentoService.js";
+import express from 'express';
+import DepartamentoService from "../services/departamentoService.js";
 
 const router = express.Router();
-const service = new departamentoService(); //Instancia del servicio
+const service = new DepartamentoService(); // Instancia del servicio
 
 // Obtener todos los departamentos
 router.get("/", (req, res) => {
@@ -10,64 +10,60 @@ router.get("/", (req, res) => {
     res.json(departamentos);
 });
 
-//Obtener un departamento específico por ID
-router.get("/:numeroDepartamento", (req, res) =>{
-    const {numeroDepartamento} = req.params;
-    const body = req.body;
-    const departamento = service.getById(numeroDepartamento, body);
-    res.json(departamento);
-});
+// Obtener un departamento específico por ID
+router.get("/:numeroDepartamento", (req, res) => {
+    const numeroDepartamento = Number(req.params.numeroDepartamento);
+    const result = service.getById(numeroDepartamento);
 
-//Crear un nuevo departamento
-router.post("/", (req, res) =>{
-    //Llama metodo 'created', pasando los datos del cuerpo de la solicitud
-    const result = service.created(req.body);
-
-    if(!result.success){
-        //Si las validaciones en service fallaron, devuelve un mensaje de error
-        return res.status(400).json({message: result.message});
+    if (!result.success) {
+        return res.status(404).json({ message: result.message });
     }
 
-    //Si todo salio bien, devuelve el departamento creado
+    res.json(result.departamento);
+});
+
+// Crear un nuevo departamento
+router.post("/", (req, res) => {
+    const result = service.create(req.body);
+
+    if (!result.success) {
+        return res.status(400).json({ message: result.message });
+    }
+
     res.status(201).json({
         message: result.message,
-        departamento: result.departamento
+        departamento: result.departamento,
     });
 });
 
+// Actualizar un departamento
+router.patch("/:id", (req, res) => {
+    const id = Number(req.params.id);
+    const result = service.update(id, req.body);
 
-//Actualizar un departamento
-router.patch("/", (req, res) =>{
-    //Llama metodo 'update', pasando los datos del cuerpo de la solicitud
-    const result = service.update(req.body);
-
-    if(!result.success){
-        //Si las validaciones en service fallaron, devuelve un mensaje de error
-        return res.status(400).json({message: result.message});
+    if (!result.success) {
+        return res.status(400).json({ message: result.message });
     }
 
-    //Si todo salio bien, devuelve el departamento actualizado
     res.status(202).json({
         message: result.message,
-        departamento: result.departamento
+        departamento: result.departamento,
     });
 });
 
-//Eliminar un departamento
-router.delete("/:id", (req, res) =>{
-    //Llama metodo 'delete', pasando por id del departamento
-    const {id} = req.params;
-    const respuesta = service.delete(id);
+// Eliminar un departamento
+router.delete("/:id", (req, res) => {
+    const id = Number(req.params.id);
+    const result = service.delete(id);
 
-    if(!respuesta.success){
-        //Si las validaciones en servicio fallaron, devuelve un mensaje de error
-        return res.status(400),json({message: respuesta.message});
+    if (!result.success) {
+        return res.status(400).json({ message: result.message });
     }
+
     res.status(202).json({
-        message: respuesta.message,
-        id
-    })
+        message: result.message,
+        id,
+    });
 });
 
-//Exportar el router como predeterminado
 export default router;
