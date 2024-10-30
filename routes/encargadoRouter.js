@@ -1,8 +1,8 @@
 import express from "express";
-import encargadoService from "../services/encargadoService.js"; // Ajusta la ruta según la ubicación
+import EncargadoService from "../services/encargadoService.js"; // Ajusta la ruta según la ubicación
 
 const router = express.Router();
-const service = new encargadoService(); // Instancia del servicio
+const service = new EncargadoService(); // Instancia del servicio
 
 // Obtener todos los encargados
 router.get("/", (req, res) => {
@@ -12,11 +12,11 @@ router.get("/", (req, res) => {
 
 // Obtener un encargado específico por ID
 router.get("/:idEncargado", (req, res) => {
-    const { idEncargado } = req.params;
+    const idEncargado = Number(req.params.idEncargado); // Convertir a número
     const encargado = service.getById(idEncargado);
 
     if (!encargado) {
-        return res.status(404).json({ message: "Encargado no encontrado" });
+        return res.status(404).json({ message: "Attendant not found" });
     }
 
     res.json(encargado);
@@ -24,46 +24,30 @@ router.get("/:idEncargado", (req, res) => {
 
 // Crear un nuevo encargado
 router.post("/", (req, res) => {
-    const result = service.create(req.body);
-
-    if (!result.success) {
-        return res.status(400).json({ message: result.message });
-    }
-
-    res.status(201).json({
-        message: result.message,
-        encargado: result.encargado,
-    });
+    const index = service.create(req.body);
+    res.status(201).json(index);
 });
 
 // Actualizar un encargado
 router.patch("/:idEncargado", (req, res) => {
-    const { idEncargado } = req.params;
-    const result = service.update(idEncargado, req.body);
-
-    if (!result.success) {
-        return res.status(400).json({ message: result.message });
+    const idEncargado = Number(req.params.idEncargado); // Convertir a número
+    try {
+        const index = service.update(idEncargado, req.body);
+        res.status(202).json(index);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
     }
-
-    res.status(202).json({
-        message: result.message,
-        encargado: result.encargado,
-    });
 });
 
 // Eliminar un encargado
 router.delete("/:idEncargado", (req, res) => {
-    const { idEncargado } = req.params;
-    const respuesta = service.delete(idEncargado);
-
-    if (!respuesta.success) {
-        return res.status(400).json({ message: respuesta.message });
+    const idEncargado = Number(req.params.idEncargado); // Convertir a número
+    try {
+        const index = service.delete(idEncargado);
+        res.status(202).json(index);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
     }
-
-    res.status(202).json({
-        message: respuesta.message,
-        idEncargado,
-    });
 });
 
 // Exportar el router como predeterminado
