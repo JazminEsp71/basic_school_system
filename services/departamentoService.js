@@ -94,7 +94,7 @@ export default class departamentoService {
     };
   }
 
-  // Eliminar sin restricciones
+  // Eliminar con restricciones
   delete(id) {
     const index = this.departamentos.findIndex((item) => item.numeroDepartamento === id);
 
